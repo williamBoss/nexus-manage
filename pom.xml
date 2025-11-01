@@ -36,7 +36,7 @@
         <tika.version>3.2.3</tika.version>
         <poi.version>4.1.2</poi.version>
         <fastjson.version>2.0.58</fastjson.version>
-        <jwt.version>0.9.1</jwt.version>
+        <jwt.version>0.13.0</jwt.version>
         <kaptcha.version>2.3.3</kaptcha.version>
         <lombok.version>1.18.38</lombok.version>
         <mapstruct-plus.version>1.5.0</mapstruct-plus.version>
@@ -143,8 +143,20 @@
             <!-- Token生成与解析-->
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt</artifactId>
+                <artifactId>jjwt-api</artifactId>
                 <version>${jwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>${jwt.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-gson</artifactId>
+                <version>${jwt.version}</version>
+                <scope>runtime</scope>
             </dependency>
 
             <!-- 验证码 -->

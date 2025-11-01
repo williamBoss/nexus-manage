@@ -1,18 +1,20 @@
 package com.nexus.core.config;
 
 import com.google.code.kaptcha.text.impl.DefaultTextCreator;
+import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
 /**
  * 验证码文本生成器
  */
+@Component
 public class KaptchaTextCreator extends DefaultTextCreator {
 	private static final String[] CNUMBERS = "0,1,2,3,4,5,6,7,8,9,10".split(",");
 
 	@Override
 	public String getText() {
-		Integer result = 0;
+		int result = 0;
 		Random random = new Random();
 		int x = random.nextInt(10);
 		int y = random.nextInt(10);
@@ -48,7 +50,7 @@ public class KaptchaTextCreator extends DefaultTextCreator {
 				suChinese.append(CNUMBERS[x]);
 			}
 		}
-		suChinese.append("=?@" + result);
+		suChinese.append("=?@").append(result);
 		return suChinese.toString();
 	}
 }

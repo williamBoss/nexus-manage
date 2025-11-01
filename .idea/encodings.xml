@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/nexus-application/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nexus-application/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nexus-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nexus-common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nexus-core/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nexus-core/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/nexus-framework/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nexus-modules/nexus-system/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nexus-modules/nexus-system/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nexus-modules/src/main/java" charset="UTF-8" />

@@ -12,12 +12,14 @@ import com.nexus.core.utils.redis.RedisCache;
 import eu.bitwalker.useragentutils.UserAgent;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -28,10 +30,6 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Component
 public class TokenManager {
-	protected static final long MILLIS_SECOND = 1000;
-	protected static final long MILLIS_MINUTE = 60 * MILLIS_SECOND;
-	private static final Long MILLIS_MINUTE_TWENTY = 20 * 60 * 1000L;
-	private final RedisCache redisCache;
 	// 令牌自定义标识
 	@Value("${token.header}")
 	private String header;
@@ -41,6 +39,10 @@ public class TokenManager {
 	// 令牌有效期（默认30分钟）
 	@Value("${token.expireTime}")
 	private int expireTime;
+	protected static final long MILLIS_SECOND = 1000;
+	protected static final long MILLIS_MINUTE = 60 * MILLIS_SECOND;
+	private static final Long MILLIS_MINUTE_TWENTY = 20 * 60 * 1000L;
+	private final RedisCache redisCache;
 
 	public TokenManager(RedisCache redisCache) {
 		this.redisCache = redisCache;
@@ -147,14 +149,20 @@ public class TokenManager {
 	}
 
 	/**
+	 * 获取token sign key
+	 */
+	private SecretKey getSigningKey() {
+		return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+	}
+
+	/**
 	 * 从数据声明生成令牌
 	 *
 	 * @param claims 数据声明
 	 * @return 令牌
 	 */
 	private String createToken(Map<String, Object> claims) {
-		String token = Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS512, secret).compact();
-		return token;
+		return Jwts.builder().claims(claims).signWith(getSigningKey(), Jwts.SIG.HS512).compact();
 	}
 
 	/**
@@ -164,7 +172,7 @@ public class TokenManager {
 	 * @return 数据声明
 	 */
 	private Claims parseToken(String token) {
-		return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+		return Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(token).getPayload();
 	}
 
 	/**

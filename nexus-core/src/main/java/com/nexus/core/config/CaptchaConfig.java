@@ -2,6 +2,7 @@ package com.nexus.core.config;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
+import com.nexus.core.utils.spring.SpringUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,6 +15,7 @@ import static com.google.code.kaptcha.Constants.*;
  */
 @Configuration
 public class CaptchaConfig {
+
 	@Bean(name = "captchaProducer")
 	public DefaultKaptcha getKaptchaBean() {
 		DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
@@ -60,7 +62,8 @@ public class CaptchaConfig {
 		// KAPTCHA_SESSION_KEY
 		properties.setProperty(KAPTCHA_SESSION_CONFIG_KEY, "kaptchaCodeMath");
 		// 验证码文本生成器
-		properties.setProperty(KAPTCHA_TEXTPRODUCER_IMPL, "config.com.mobi.framework.KaptchaTextCreator");
+		properties.setProperty(KAPTCHA_TEXTPRODUCER_IMPL,
+			SpringUtils.getBean(KaptchaTextCreator.class).getClass().getName());
 		// 验证码文本字符间距 默认为2
 		properties.setProperty(KAPTCHA_TEXTPRODUCER_CHAR_SPACE, "3");
 		// 验证码文本字符长度 默认为5

@@ -29,7 +29,7 @@ spring:
     druid:
       # 主库数据源
       master:
-        url: jdbc:mysql://47.103.5.196:3309/mobi-manage?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        url: jdbc:mysql://47.103.5.196:3309/nexus-manage?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
         username: root
         password: Mysql8.0@Root_
       # 从库数据源
